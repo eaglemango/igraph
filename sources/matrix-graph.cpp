@@ -46,6 +46,8 @@ MatrixGraph& MatrixGraph::operator=(const MatrixGraph& matrix_graph) {
     if (this == &matrix_graph) {
         return *this;
     }
+    
+    matrix.resize(static_cast<unsigned long>(matrix_graph.VerticesCount()));
 
     for (int i = 0; i < matrix_graph.VerticesCount(); ++i) {
         matrix[i].resize(static_cast<unsigned long>(matrix_graph.VerticesCount()));
