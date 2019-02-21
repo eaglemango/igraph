@@ -5,7 +5,10 @@ class SetGraph : public IGraph {
 public:
     SetGraph(int vertices_count);
     SetGraph(const IGraph* old_graph);
+    
     ~SetGraph() override;
+    SetGraph(const SetGraph& set_graph);
+    SetGraph& operator=(const SetGraph& set_graph);
 
     void AddEdge(int from, int to) override;
 
