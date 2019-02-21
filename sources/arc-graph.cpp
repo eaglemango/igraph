@@ -17,7 +17,39 @@ ArcGraph::ArcGraph(const IGraph *old_graph) {
     }
 }
 
-ArcGraph::~ArcGraph() {}
+ArcGraph::~ArcGraph() = default;
+
+ArcGraph::ArcGraph(const ArcGraph& arc_graph) {
+    vertices_count = arc_graph.VerticesCount();
+    edges.resize(static_cast<unsigned long>(arc_graph.VerticesCount()));
+
+    std::vector<int> vertices;
+    for (int from = 0; from < arc_graph.VerticesCount(); ++from) {
+        arc_graph.GetNextVertices(from, vertices);
+        for (int to : vertices) {
+            AddEdge(from, to);
+        }
+    }
+}
+
+ArcGraph& ArcGraph::operator=(const ArcGraph& arc_graph) {
+    if (this == &arc_graph) {
+        return *this;
+    }
+
+    vertices_count = arc_graph.VerticesCount();
+    edges.resize(static_cast<unsigned long>(arc_graph.VerticesCount()));
+
+    std::vector<int> vertices;
+    for (int from = 0; from < arc_graph.VerticesCount(); ++from) {
+        arc_graph.GetNextVertices(from, vertices);
+        for (int to : vertices) {
+            AddEdge(from, to);
+        }
+    }
+
+    return *this;
+}
 
 void ArcGraph::AddEdge(int from, int to) {
     edges.push_back(std::make_pair(from, to));
