@@ -16,7 +16,35 @@ ListGraph::ListGraph(const IGraph* old_graph) {
     }
 }
 
-ListGraph::~ListGraph() {}
+ListGraph::~ListGraph() = default;
+
+ListGraph::ListGraph(const ListGraph& list_graph) {
+    children.resize(static_cast<unsigned long>(list_graph.VerticesCount()));
+
+    std::vector<int> vertices;
+    for (int from = 0; from < list_graph.VerticesCount(); ++from) {
+        list_graph.GetNextVertices(from, vertices);
+        for (int to : vertices) {
+            AddEdge(from, to);
+        }
+    }
+}
+
+ListGraph& ListGraph::operator=(const ListGraph& list_graph) {
+    if (this == &list_graph) {
+        return *this;
+    }
+
+    std::vector<int> vertices;
+    for (int from = 0; from < list_graph.VerticesCount(); ++from) {
+        list_graph.GetNextVertices(from, vertices);
+        for (int to : vertices) {
+            AddEdge(from, to);
+        }
+    }
+
+    return *this;
+}
 
 void ListGraph::AddEdge(int from, int to) {
     children[from].push_back(to);
