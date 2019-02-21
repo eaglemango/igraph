@@ -4,7 +4,10 @@ struct ArcGraph : public IGraph {
 public:
     ArcGraph(int vertices_count);
     ArcGraph(const IGraph* old_graph);
+    
     ~ArcGraph() override;
+    ArcGraph(const ArcGraph& arc_graph);
+    ArcGraph& operator=(const ArcGraph& arc_graph);
 
     void AddEdge(int from, int to) override;
 
