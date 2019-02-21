@@ -24,7 +24,43 @@ MatrixGraph::MatrixGraph(const IGraph *old_graph) {
     }
 }
 
-MatrixGraph::~MatrixGraph() {}
+MatrixGraph::~MatrixGraph() = default;
+
+MatrixGraph::MatrixGraph(const MatrixGraph& matrix_graph) {
+    matrix.resize(static_cast<unsigned long>(matrix_graph.VerticesCount()));
+
+    for (int i = 0; i < matrix_graph.VerticesCount(); ++i) {
+        matrix[i].resize(static_cast<unsigned long>(matrix_graph.VerticesCount()));
+    }
+
+    std::vector<int> vertices;
+    for (int from = 0; from < matrix_graph.VerticesCount(); ++from) {
+        matrix_graph.GetNextVertices(from, vertices);
+        for (int to : vertices) {
+            AddEdge(from, to);
+        }
+    }
+}
+
+MatrixGraph& MatrixGraph::operator=(const MatrixGraph& matrix_graph) {
+    if (this == &matrix_graph) {
+        return *this;
+    }
+
+    for (int i = 0; i < matrix_graph.VerticesCount(); ++i) {
+        matrix[i].resize(static_cast<unsigned long>(matrix_graph.VerticesCount()));
+    }
+
+    std::vector<int> vertices;
+    for (int from = 0; from < matrix_graph.VerticesCount(); ++from) {
+        matrix_graph.GetNextVertices(from, vertices);
+        for (int to : vertices) {
+            AddEdge(from, to);
+        }
+    }
+
+    return *this;
+}
 
 void MatrixGraph::AddEdge(int from, int to) {
     matrix[from][to] = 1;
