@@ -4,7 +4,10 @@ class ListGraph : public IGraph {
 public:
     ListGraph(int vertices_count);
     ListGraph(const IGraph* old_graph);
+    
     ~ListGraph() override;
+    ListGraph(const ListGraph& another_graph);
+    ListGraph& operator=(const ListGraph& list_graph);
 
     void AddEdge(int from, int to) override;
 
