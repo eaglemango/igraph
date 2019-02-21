@@ -4,7 +4,10 @@ class MatrixGraph : public IGraph {
 public:
     MatrixGraph(int vertices_count);
     MatrixGraph(const IGraph* old_graph);
+    
     ~MatrixGraph() override;
+    MatrixGraph(const MatrixGraph& matrix_graph);
+    MatrixGraph& operator=(const MatrixGraph& matrix_graph);
 
     void AddEdge(int from, int to) override;
 
